@@ -1,0 +1,121 @@
+<AutoCompleteInput>:
+    hint_text: ''
+    write_tab: False # I do this in code also
+
+<Row@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    value: ''
+    Label:
+        size_hint: 1, None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        halign: 'left'
+        valign: 'middle'
+        markup: True
+        text: root.value
+        on_ref_press:
+            root.parent.parent.parent.on_search(args[1], True)
+
+<Nurture>:
+    canvas:
+        Color:
+            rgba: 0.3, 0.3, 0.3, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    rv: rv
+    orientation: 'vertical'
+
+    AutoCompleteInput:
+        id: search_input
+        size_hint_y: None
+        hint_text: 'Search'
+        multiline: False
+        padding: dp(10), dp(10), 0, 0
+        on_text: 
+            root.on_text(self)
+            root.on_search(self.text, False)
+
+    RecycleView:
+        id: rv
+        scroll_type: ['bars', 'content']
+        scroll_wheel_distance: dp(114)
+        bar_width: dp(10)
+        viewclass: 'Row'
+        RecycleBoxLayout:
+            default_size: None, dp(56)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            spacing: dp(2)
+
+    BoxLayout:
+        size_hint_y: None   
+        AutoCompleteInput:
+            id: update_item_input
+            size_hint_x: 0.8
+            hint_text: 'A thought...'
+            padding: dp(10), dp(10), 0, 0
+            focus: True
+            on_text: root.on_text(self)
+        Button:
+            text: 'Submit'
+            size_hint_x: 0.2
+            on_press:
+                root.insert(update_item_input.text)
+                update_item_input.text = ''
+
+<Sidebar>
+    orientation: 'vertical'
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        Label:
+            text: '@ShortName'
+            id: short_name
+            size_hint_y: None
+        Label:
+            text: 'N Days since Intraction'
+            id: last_interaction
+            size_hint_y: None
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        TextInput:
+            hint_text: 'First Name'
+            id: first_name
+            multiline: False
+            size_hint_y: None
+        TextInput:
+            hint_text: 'Middle Name'
+            id: middle_name
+            multiline: False
+            size_hint_y: None
+        TextInput:
+            hint_text: 'Last Name'
+            id: last_name
+            multiline: False
+            size_hint_y: None
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        TextInput:
+            hint_text: 'Birth Date'
+            id: birth_date
+            multiline: False
+            size_hint_y: None
+        CheckBox: # Male?
+            active: True
+            id: is_male
+            size_hint_y: None
+    TextInput:
+        multiline: True    
+        hint_text: 'Info'
+        id: info
+        size_hint_y: 0.8
