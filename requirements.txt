@@ -1,0 +1,4 @@
+geocoder==1.38.1
+Kivy==1.10.0
+recurrent==0.2.5
+networkx==1.11
